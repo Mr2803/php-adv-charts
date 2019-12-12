@@ -1,7 +1,6 @@
 $(document).ready(init);
 
 function init() {
-
    getAjax();
 }
 
@@ -15,7 +14,7 @@ function print(wherePrint, keyGlobal, labels, label, technical_data, data) {
          datasets: [{
                label: label,
                data: technical_data,
-               backgroundColor:'rgba(255, 206, 86, 0.2)',
+               backgroundColor:'rgba(255, 206, 86, 0.3)',
                borderColor: 'rgba(255, 159, 64, 1)',
                borderWidth: 1
          }]
@@ -40,22 +39,20 @@ function print(wherePrint, keyGlobal, labels, label, technical_data, data) {
    }
 
 function getAjax() {
-
    $.ajax({
-
       url: "getChartData.php",
       method: "GET",
       success: function (data) {
-         var fatturato = data["fatturato"];
-         var printHere = 'myChartLine';
          var keyGlobal = "fatturato";
+         var fatturato = data[keyGlobal];
+         var printHere = 'myChartLine';
          var keys = moment.months();
          var label = "Vendite";
          var values = Object.values(fatturato["data"]);
          print(printHere, keyGlobal, keys, label, values, data);
-         var fatturato_by_agent = data["fatturato_by_agent"]
-         var printHere2 = 'myChartPie';
          var keyGlobal2 = "fatturato_by_agent";
+         var fatturato_by_agent = data[keyGlobal2];
+         var printHere2 = 'myChartPie';
          var label2 = "";
          var keys2 = Object.keys(fatturato_by_agent["data"]);
          var values2 = Object.values(fatturato_by_agent["data"]);

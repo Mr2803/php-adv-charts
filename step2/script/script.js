@@ -8,6 +8,7 @@ function init() {
 
 function printLineFatturato(revenue,data){
     var revenue = data["fatturato"];
+    console.log(revenue)
     var ctx = document.getElementById('myChartLine').getContext('2d');
     new Chart(ctx, {
         type: revenue["type"],
@@ -49,12 +50,10 @@ function printLineFatturato(revenue,data){
 
 function printPieFatturatoAgent(revenueAgents,keys,values,data){
     var revenueAgents = data["fatturato_by_agent"]
-    console.log(values)
+    console.log(revenueAgents)
     var ctx = document.getElementById('myChartPie').getContext('2d');
     new Chart(ctx, {
         type: revenueAgents["type"],
-
-        // The data for our dataset
         data: {
             labels: keys,
             datasets: [{
@@ -123,6 +122,7 @@ function getAjaxPie() {
             var fatturato_by_agent = data["fatturato_by_agent"]
             var keys = Object.keys(fatturato_by_agent["data"]);
             var values = Object.values(fatturato_by_agent["data"]);
+            console.log(values, keys)
             printPieFatturatoAgent(fatturato_by_agent,keys,values,data);
         },
         error: function (err) {
