@@ -1,20 +1,21 @@
 $(document).ready(init);
 
 function init() {
+    
     getAjaxLine();
     getAjaxPie();
 }
 
-function printLineFatturato(data){
-    var fatturato = data["fatturato"];//parse.fatturato
+function printLineFatturato(revenue,data){
+    var revenue = data["fatturato"];
     var ctx = document.getElementById('myChartLine').getContext('2d');
     new Chart(ctx, {
-        type: fatturato["type"],
+        type: revenue["type"],
         data: {
             labels: moment.months(),
             datasets: [{
                 label: 'Vendite',
-                data: fatturato["data"],
+                data: revenue["data"],
                 backgroundColor: [
                     'rgba(255, 206, 86, 0.2)'
                 ],
@@ -46,17 +47,12 @@ function printLineFatturato(data){
     })
 }
 
-function printPieFatturatoAgent(data){
-    var fatturato_by_agent = data["fatturato_by_agent"];//data.fatturato_by_agent
-    /* console.log(fatturato_by_agent.type)
-    console.log(fatturato_by_agent.data.Marco) */
-    var keys = Object.keys(fatturato_by_agent["data"]);
-    var values = Object.values(fatturato_by_agent["data"]);
+function printPieFatturatoAgent(revenueAgents,keys,values,data){
+    var revenueAgents = data["fatturato_by_agent"]
     console.log(values)
     var ctx = document.getElementById('myChartPie').getContext('2d');
     new Chart(ctx, {
-        //il mio type in questo caso sara il parse della chiave fatturato con chiave type
-        type: fatturato_by_agent["type"],
+        type: revenueAgents["type"],
 
         // The data for our dataset
         data: {
@@ -107,8 +103,8 @@ function getAjaxLine() {
         url: "getChartData.php",
         method: "GET",
         success: function (data) {
-            
-            printLineFatturato(data);
+            var fatturato = data["fatturato"];
+            printLineFatturato(fatturato,data);
             
         },
         error: function (err) {
@@ -124,7 +120,10 @@ function getAjaxPie() {
         url: "getChartData.php",
         method: "GET",
         success: function (data) {
-            printPieFatturatoAgent(data);
+            var fatturato_by_agent = data["fatturato_by_agent"]
+            var keys = Object.keys(fatturato_by_agent["data"]);
+            var values = Object.values(fatturato_by_agent["data"]);
+            printPieFatturatoAgent(fatturato_by_agent,keys,values,data);
         },
         error: function (err) {
             console.log("error", err)
