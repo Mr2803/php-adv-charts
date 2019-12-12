@@ -1,0 +1,14 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+body{
+    background: rgb(61, 59, 59);
+}
+
+.wrapper{
+    width:50%;
+    margin:0 auto;
+}
