@@ -40,7 +40,7 @@
     <!-- INCLUDO LIBRERIA PER LOCALITA' ITALIA -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/it.js"></script>
     <!-- JS: MY SCRIPT -->
-    <script src="script/script.js" charset="utf-8"></script>
+    <script src="script/script2.js" charset="utf-8"></script>
 </body>
 
 </html>

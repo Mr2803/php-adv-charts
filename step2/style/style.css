@@ -7,8 +7,14 @@
 body{
     background: rgb(61, 59, 59);
 }
-
 .wrapper{
+    display:flex;
+    justify-content: center;
+    align-items: center;
     width:50%;
-    margin:0 auto;
+    margin:auto;
+}
+
+canvas{
+    max-width: 85%;
 }
