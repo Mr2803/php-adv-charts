@@ -1,22 +1,28 @@
+$(document).ready(init);
 
-function printChartJs(data){
+function init() {
+    getAjaxLine();
+    getAjaxPie();
+}
 
-    var ctx = document.getElementById('myChart').getContext('2d');
+function printLineFatturato(data){
+    var fatturato = data["fatturato"];//parse.fatturato
+    var ctx = document.getElementById('myChartLine').getContext('2d');
     new Chart(ctx, {
-        type: 'line',
+        type: fatturato["type"],
         data: {
-            labels : moment.months(),
+            labels: moment.months(),
             datasets: [{
                 label: 'Vendite',
-                data: data,
+                data: fatturato["data"],
                 backgroundColor: [
                     'rgba(255, 206, 86, 0.2)'
                 ],
                 borderColor: [
-                    
+
                     'rgba(255, 159, 64, 1)'
                 ],
-                
+
                 borderWidth: 1
             }]
         },
@@ -24,11 +30,11 @@ function printChartJs(data){
             legend: {
                 labels: {
                     fontColor: 'black',
-                    fontSize :15,
-                    fontStyle : "bold"
+                    fontSize: 15,
+                    fontStyle: "bold"
                 }
             },
-            
+
             scales: {
                 yAxes: [{
                     ticks: {
@@ -37,26 +43,97 @@ function printChartJs(data){
                 }]
             }
         }
-    });
+    })
 }
 
-function getData(){
+function printPieFatturatoAgent(data){
+    var fatturato_by_agent = data["fatturato_by_agent"];//data.fatturato_by_agent
+    /* console.log(fatturato_by_agent.type)
+    console.log(fatturato_by_agent.data.Marco) */
+    var keys = Object.keys(fatturato_by_agent["data"]);
+    var values = Object.values(fatturato_by_agent["data"]);
+    console.log(values)
+    var ctx = document.getElementById('myChartPie').getContext('2d');
+    new Chart(ctx, {
+        //il mio type in questo caso sara il parse della chiave fatturato con chiave type
+        type: fatturato_by_agent["type"],
 
-    $.ajax({
-        url:"getLineData.php",
-        method:"GET",
-        success : function(data){
-            console.log("data",data);
-            printChartJs(data);
+        // The data for our dataset
+        data: {
+            labels: keys,
+            datasets: [{
+                data: values,
+                backgroundColor: [
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                ],
+                borderColor: [
+
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 159, 64, 1)',
+                ],
+
+                borderWidth: 1
+            }]
         },
-        error: function(err){
-            console.log("error",err)
+        options: {
+            legend: {
+                labels: {
+                    fontColor: 'black',
+                    fontSize: 15,
+                    fontStyle: "bold"
+                }
+            },
+
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
         }
     })
 }
 
-function init(){
-    getData();
+function getAjaxLine() {
+
+    $.ajax({
+
+        url: "getChartData.php",
+        method: "GET",
+        success: function (data) {
+            
+            printLineFatturato(data);
+            
+        },
+        error: function (err) {
+            console.log("error", err)
+        }
+    });
 }
 
-$(document).ready(init);
+function getAjaxPie() {
+
+    $.ajax({
+
+        url: "getChartData.php",
+        method: "GET",
+        success: function (data) {
+            printPieFatturatoAgent(data);
+        },
+        error: function (err) {
+            console.log("error", err)
+        }
+    });
+}
+
+
+
+
+
+
