@@ -75,15 +75,69 @@ function printPieFatturatoAgent(data){
     })
 }
 
+function printEfficiency(data) {
+    var keys = Object.keys(data["data"]);
+    console.log(keys)
+    var values = Object.values(data["data"]);
+    var ctx = document.getElementById('myChartEfficiency').getContext('2d');
+    new Chart(ctx, {
+        type: data["type"],
+        data: {
+            labels: moment.months(),
+            datasets: [
+                {
+                label: keys[0],
+                data: values[0],
+                backgroundColor: 'rgba(255, 16, 86, 0.3)',
+                borderColor: 'rgba(255, 16, 64, 1)',
+                borderWidth: 1
+                },
+                {
+                label: keys[1],
+                data: values[1],
+                backgroundColor: 'rgba(138, 182, 255, 0.4)',
+                borderColor: 'rgba(138, 190, 255, 1)',
+                borderWidth: 1
+                },
+                {
+                label: keys[2],
+                data: values[2],
+                backgroundColor: 'rgba(43, 900, 126, 0.7)',
+                borderColor: 'rgba(43, 159, 64, 1)',
+                borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            legend: {
+                labels: {
+                    fontColor: 'black',
+                    fontSize: 15,
+                    fontStyle: "bold"
+                }
+            },
+
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    })
+}
+
 function getAjax() {
 
     $.ajax({
 
-        url: "getChartData.php",
+        url: "getAllChart.php",
         method: "GET",
         success: function (data) {
             printLineFatturato(data["fatturato"]);
             printPieFatturatoAgent(data["fatturato_by_agent"]);
+            printEfficiency(data["team_efficiency"])
         },
         error: function (err) {
             console.log("error", err)
