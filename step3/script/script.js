@@ -128,15 +128,18 @@ function printEfficiency(data) {
 }
 
 function getAjax() {
-   var url = window.location.href;
-   console.log("Url:", url);
-
-   var elem = url.split("=");
-   console.log("elemento:", elem)
-
-   var liv = elem[1];
-   
-   console.log("questo è il log di liv " + liv);
+  
+      var url = window.location.href;
+      
+      console.log("Url:", url);
+      
+      var elem = url.split("http://localhost/step3/?level=");
+      
+      console.log("elemento:", elem);
+      var liv = elem[1];
+  
+      
+      console.log("questo è il log di liv " + liv);
 
    $.ajax({
 
@@ -147,9 +150,12 @@ function getAjax() {
       },
       success: function (data) {
          console.log(data)
-         printLineFatturato(data[0]);
-         printPieFatturatoAgent(data[1]);
-         printEfficiency(data[2]);
+         
+
+            printLineFatturato(data[0]);
+            printPieFatturatoAgent(data[1]);
+            printEfficiency(data[2]);
+         
       },
       error: function (err) {
          console.log("error", err)
