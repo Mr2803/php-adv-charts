@@ -5,6 +5,16 @@ function init() {
    getAjax();
 }
 
+function getRandomColor() {
+   const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+   const randomByte = () => randomNumber(0, 255)
+   console.log(randomByte)
+   const randomPercent = () => (randomNumber(50, 100) * 0.01).toFixed(2)
+   const randomCssRgba = () => `rgba(${[randomByte(), randomByte(), randomByte(), randomPercent()].join(',')})`;
+
+   return randomCssRgba;
+}
+
 function printLineFatturato(data){
    
    var ctx = document.getElementById('myChartLine').getContext('2d');
@@ -15,9 +25,8 @@ function printLineFatturato(data){
          datasets: [{
                label: 'Vendite',
                data: data["data"],
-               backgroundColor:'rgba(255, 206, 86, 0.2)',
-               borderColor:'rgba(255, 159, 64, 1)',
-               borderWidth: 1
+            backgroundColor: "rgba(255, 206, 86, 0.2) ",
+               borderColor: getRandomColor()
          }]
       },
       options: {
@@ -40,6 +49,8 @@ function printLineFatturato(data){
    })
 }
 
+
+
 function printPieFatturatoAgent(data){
    var keys = Object.keys(data["data"]);
    var values = Object.values(data["data"]);
@@ -50,8 +61,8 @@ function printPieFatturatoAgent(data){
          labels: keys,
          datasets: [{
                data: values,
-               backgroundColor: 'rgba(255, 206, 86, 0.2)',
-               borderColor: 'rgba(255, 159, 64, 1)',
+               backgroundColor: getRandomColor(),
+               borderColor: "white",
                borderWidth: 1
          }]
       },
@@ -94,16 +105,16 @@ function printEfficiency(data) {
                {
                label: keys[1],
                data: values[1],
-               backgroundColor: 'rgba(138, 182, 255, 0.4)',
-               borderColor: 'rgba(138, 190, 255, 1)',
-               borderWidth: 1
+                  backgroundColor: 'rgba(138, 182, 255, 0.4)',
+                  borderColor: 'rgba(138, 190, 255, 1)',
+               borderWidth: 2
                },
                {
                label: keys[2],
                data: values[2],
-               backgroundColor: 'rgba(43, 900, 126, 0.7)',
-               borderColor: 'rgba(43, 159, 64, 1)',
-               borderWidth: 1
+                  backgroundColor: 'rgba(43, 900, 126, 0.7)',
+                  borderColor: 'rgba(43, 159, 64, 1)',
+               borderWidth: 3
                }
          ]
       },
